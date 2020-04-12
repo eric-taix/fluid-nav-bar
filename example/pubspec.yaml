@@ -1,0 +1,32 @@
+name: example
+description: A fluid bottom navigation bar example
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+
+  fluid_bottom_nav_bar:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/calendar.svg
+    - assets/conference.svg
+    - assets/conference2.svg
+    - assets/conference3.svg
+    - assets/conference4.svg
+    - assets/home.svg
+
