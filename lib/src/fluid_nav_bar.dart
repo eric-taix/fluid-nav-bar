@@ -101,7 +101,7 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
           begin: Curves.easeInExpo.transform(_yController.value),
           end: inCurve.transform(_yController.value),
         ).transform(_yController.velocity.sign * 0.5 + 0.5),
-        Color(0xFFEF5F68),
+        Colors.white, //Color(0xFFEF5F68),
       ),
     );
   }
@@ -114,10 +114,10 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
               iconPath: entry.value,
               selected: _selectedIndex == entry.key,
               onPressed: () => _handlePressed(entry.key),
-              backgroundColor: Color(0xFFEF5F68),
-              foregroundColor: Colors.grey.shade800,
-              activeColor: Colors.white,
-              minScale: 0.8,
+          //    backgroundColor: Color(0xFFEF5F68),
+          //    foregroundColor: Colors.grey.shade800,
+          //    activeColor: Colors.white,
+              popScale: 1.2,
             ))
         .toList();
   }

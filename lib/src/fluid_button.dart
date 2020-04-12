@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,8 +14,7 @@ class FluidNavBarButton extends StatefulWidget {
   final Color backgroundColor;
   final Color foregroundColor;
   final Color activeColor;
-  final double minScale;
-  final double maxScale;
+  final double popScale;
 
   final FluidNavBarButtonPressedCallback onPressed;
 
@@ -24,8 +25,7 @@ class FluidNavBarButton extends StatefulWidget {
     this.backgroundColor = Colors.white,
     this.foregroundColor = Colors.grey,
     this.activeColor = Colors.black,
-    this.minScale = 0.95,
-    this.maxScale = 1.05,
+    this.popScale = 1.05,
   });
 
   @override
@@ -43,6 +43,7 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
 
   AnimationController _animationController;
   Animation<double> _animation;
+  Animation<double> _scaleAnimation;
 
   _FluidNavBarButtonState(this._selected);
 
@@ -75,10 +76,21 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
     final offset = Tween<double>(begin: _defaultOffset, end: _activeOffset).transform(
       offsetCurve.transform(_animation.value),
     );
-    final scale = Tween<double>(begin: widget.minScale, end: widget.maxScale).transform(offsetCurve.transform(_animation.value));
+
+    final scale = _selected ? TweenSequence([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: _radius, end: _radius * widget.popScale),
+        weight: 50.0,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: _radius * widget.popScale, end: _radius),
+        weight: 50.0,
+      ),
+    ]).transform(Interval(0.0, 0.3).transform(_animation.value)) :
+        Tween(begin: _radius, end: _radius).transform(Interval(0.3, 1.0).transform(_animation.value));
 
     final clipCurve = _selected ? Interval(0.31, 0.42, curve: Curves.easeOutQuint) : Interval(0.5, 0.8, curve: Curves.easeInCirc);
-    final clip = Tween<double>(begin: 0.0, end: _radius * scale).transform(clipCurve.transform(_animationController.value));
+    final clip = Tween<double>(begin: 0.0, end: _radius).transform(clipCurve.transform(_animationController.value));
 
     return GestureDetector(
       onTap: widget.onPressed,
@@ -100,19 +112,19 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton> with SingleTicker
                 child: SvgPicture.asset(
                   widget.iconPath,
                   color: widget.foregroundColor,
-                  width: _radius * scale,
-                  height: _radius * scale,
+                  width: _radius,
+                  height: scale,
                   colorBlendMode: BlendMode.srcATop,
                 )),
             Container(
                 alignment: Alignment.center,
                 child: ClipRect(
-                  clipper: _SvgPictureClipper(clip),
+                  clipper: _SvgPictureClipper(clip *(scale / _radius)),
                   child: SvgPicture.asset(
                     widget.iconPath,
                     color: widget.activeColor,
-                    width: _radius * scale,
-                    height: _radius * scale,
+                    width: _radius,
+                    height: scale,
                     colorBlendMode: BlendMode.srcATop,
                   ),
                 )),
@@ -157,3 +169,4 @@ class _SvgPictureClipper extends CustomClipper<Rect> {
     return true;
   }
 }
+
