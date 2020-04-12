@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
+import 'package:flutter/material.dart';
 
 import 'content/home.dart';
 import 'content/account.dart';
@@ -30,12 +30,17 @@ class _FluidNavBarDemoState extends State {
         extendBody: true,
         body: _child,
         bottomNavigationBar: FluidNavBar(
-          iconPaths: [
-            'assets/home.svg',
-            'assets/conference.svg',
-            'assets/calendar.svg',
+          icons: [
+            FluidNavBarIcon(iconPath: "assets/home.svg", backgroundColor: Color(0xFF4285F4)),
+            FluidNavBarIcon(iconPath: "assets/bookmark.svg", backgroundColor: Color(0xFFEC4134)),
+            FluidNavBarIcon(iconPath: "assets/partner.svg", backgroundColor: Color(0xFFFCBA02)),
+            FluidNavBarIcon(iconPath: "assets/conference.svg", backgroundColor: Color(0xFF34A950)),
           ],
           onChange: _handleNavigationChange,
+         style: FluidNavBarStyle(
+            iconUnselectedForegroundColor: Colors.white
+          ),
+          scaleFactor: 1.5,
         ),
       ),
     );

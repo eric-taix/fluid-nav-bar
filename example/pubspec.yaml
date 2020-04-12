@@ -24,9 +24,12 @@ flutter:
   uses-material-design: true
   assets:
     - assets/calendar.svg
+    - assets/calendar-fill.svg
     - assets/conference.svg
     - assets/conference2.svg
     - assets/conference3.svg
     - assets/conference4.svg
     - assets/home.svg
+    - assets/bookmark.svg
+    - assets/partner.svg
 
