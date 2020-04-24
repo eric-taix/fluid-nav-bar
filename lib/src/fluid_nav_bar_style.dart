@@ -19,7 +19,7 @@ import 'package:flutter/widgets.dart';
 /// ```
 /// {@end-tool}
 @immutable
-class FluidNavBarStyle extends Diagnosticable {
+class FluidNavBarStyle with DiagnosticableMixin {
 
   /// The navigation bar background color
   final Color barBackgroundColor;
