@@ -20,7 +20,6 @@ import 'package:flutter/widgets.dart';
 /// {@end-tool}
 @immutable
 class FluidNavBarStyle with DiagnosticableMixin {
-
   /// The navigation bar background color
   final Color barBackgroundColor;
 

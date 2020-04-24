@@ -9,7 +9,14 @@ class PlaceholderCardShort extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
 
-  const PlaceholderCardShort({Key key, this.cornerRadius = 4, this.color, this.backgroundColor, this.width = 400, this.height = 90 }) : super(key: key);
+  const PlaceholderCardShort(
+      {Key key,
+      this.cornerRadius = 4,
+      this.color,
+      this.backgroundColor,
+      this.width = 400,
+      this.height = 90})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +37,25 @@ class PlaceholderCardShort extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Container(
               margin: EdgeInsets.only(right: 8),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: fgColor),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4), color: fgColor),
               height: 32,
               width: 32,
             ),
           ),
 
           //Content Line
-          Container(margin: EdgeInsets.only(right: 60.0 + r.nextInt(60)), color: fgColor, height: lineHeight ),
+          Container(
+              margin: EdgeInsets.only(right: 60.0 + r.nextInt(60)),
+              color: fgColor,
+              height: lineHeight),
 
           //Content Line
-          Container(margin: EdgeInsets.only(right: 80.0 + r.nextInt(120), top: lineHeight + 6), color: fgColor, height: lineHeight ),
-
+          Container(
+              margin: EdgeInsets.only(
+                  right: 80.0 + r.nextInt(120), top: lineHeight + 6),
+              color: fgColor,
+              height: lineHeight),
         ],
       ),
     );

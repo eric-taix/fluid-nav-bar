@@ -19,9 +19,7 @@ typedef void FluidNavBarButtonTappedCallback();
 ///  * [FluidNavBarIcon]
 
 class FluidNavBarItem extends StatefulWidget {
-
   static const nominalExtent = const Size(64, 64);
-
 
   /// The path of the SVG asset
   final String iconPath;
@@ -64,7 +62,8 @@ class FluidNavBarItem extends StatefulWidget {
   }
 }
 
-class _FluidNavBarItemState extends State<FluidNavBarItem> with SingleTickerProviderStateMixin {
+class _FluidNavBarItemState extends State<FluidNavBarItem>
+    with SingleTickerProviderStateMixin {
   static const double _activeOffset = 16;
   static const double _defaultOffset = 0;
   static const double _iconSize = 25;
@@ -86,19 +85,23 @@ class _FluidNavBarItemState extends State<FluidNavBarItem> with SingleTickerProv
     double waveRatio = 0.28;
     _animationController = AnimationController(
       duration: Duration(milliseconds: (1600 * widget.animationFactor).toInt()),
-      reverseDuration: Duration(milliseconds: (1000 * widget.animationFactor).toInt()),
+      reverseDuration:
+          Duration(milliseconds: (1000 * widget.animationFactor).toInt()),
       vsync: this,
     )..addListener(() => setState(() {}));
 
-    _activeColorClipAnimation = Tween<double>(begin: 0.0, end: _iconSize).animate(CurvedAnimation(
+    _activeColorClipAnimation =
+        Tween<double>(begin: 0.0, end: _iconSize).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(0.25, 0.38, curve: Curves.easeOut),
       reverseCurve: Interval(0.5, 0.8, curve: Curves.easeInCirc),
     ));
 
-    var _animation = CurvedAnimation(parent: _animationController, curve: LinearPointCurve(waveRatio, 0.0));
+    var _animation = CurvedAnimation(
+        parent: _animationController, curve: LinearPointCurve(waveRatio, 0.0));
 
-    _yOffsetAnimation = Tween<double>(begin: _defaultOffset, end: _activeOffset).animate(CurvedAnimation(
+    _yOffsetAnimation = Tween<double>(begin: _defaultOffset, end: _activeOffset)
+        .animate(CurvedAnimation(
       parent: _animation,
       curve: ElasticOutCurve(0.38),
       reverseCurve: Curves.easeInCirc,
@@ -107,7 +110,8 @@ class _FluidNavBarItemState extends State<FluidNavBarItem> with SingleTickerProv
     var activatingHalfTween = Tween<double>(begin: 1, end: widget.scaleFactor);
     _activatingAnimation = TweenSequence([
       TweenSequenceItem(tween: activatingHalfTween, weight: 50.0),
-      TweenSequenceItem(tween: ReverseTween<double>(activatingHalfTween), weight: 50.0),
+      TweenSequenceItem(
+          tween: ReverseTween<double>(activatingHalfTween), weight: 50.0),
     ]).animate(CurvedAnimation(
       parent: _animation,
       curve: Interval(0.0, 0.3),
@@ -141,7 +145,8 @@ class _FluidNavBarItemState extends State<FluidNavBarItem> with SingleTickerProv
   Widget build(context) {
     const ne = FluidNavBarItem.nominalExtent;
 
-    final scaleAnimation = _selected ? _activatingAnimation : _inactivatingAnimation;
+    final scaleAnimation =
+        _selected ? _activatingAnimation : _inactivatingAnimation;
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -170,14 +175,14 @@ class _FluidNavBarItemState extends State<FluidNavBarItem> with SingleTickerProv
             Container(
                 alignment: Alignment.center,
                 child: ClipRect(
-                  clipper: _SvgPictureClipper(_activeColorClipAnimation.value * scaleAnimation.value),
+                  clipper: _SvgPictureClipper(
+                      _activeColorClipAnimation.value * scaleAnimation.value),
                   child: SvgPicture.asset(
                     widget.iconPath,
                     color: widget.selectedForegroundColor,
                     width: _iconSize,
                     height: _iconSize * scaleAnimation.value,
                     colorBlendMode: BlendMode.srcIn,
-
                   ),
                 )),
           ]),
@@ -205,7 +210,8 @@ class _SvgPictureClipper extends CustomClipper<Rect> {
 
   @override
   Rect getClip(Size size) {
-    return Rect.fromPoints(size.topLeft(Offset.zero), size.topRight(Offset.zero) + Offset(0, height));
+    return Rect.fromPoints(size.topLeft(Offset.zero),
+        size.topRight(Offset.zero) + Offset(0, height));
   }
 
   @override
