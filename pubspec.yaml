@@ -1,6 +1,6 @@
 name: fluid_bottom_nav_bar
-description: A fluid bottom navigation bar
-version: 0.0.1
+description: A beautiful bottom navigation with a fluid animation. Bar color, icons and animation speed are fully customizable.
+version: 1.0.0
 homepage: https://github.com/eric-taix/fluid-nav-bar
 
 environment:

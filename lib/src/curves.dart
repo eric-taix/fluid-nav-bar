@@ -14,5 +14,4 @@ class LinearPointCurve extends Curve {
     final upperOffset = 1.0 - upperScale;
     return x < pIn ? x * lowerScale : x * upperScale + upperOffset;
   }
-
 }

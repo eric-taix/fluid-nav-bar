@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 
 /// An icon definition used as child by [FluidNavBar]
@@ -9,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 ///  * [FluidNavBar]
 
 class FluidNavBarIcon {
-
   /// The path of the SVG asset
   final String iconPath;
 
@@ -22,6 +19,9 @@ class FluidNavBarIcon {
   /// The background color of the item
   final Color backgroundColor;
 
-  FluidNavBarIcon({@required this.iconPath, this.selectedForegroundColor, this.unselectedForegroundColor, this.backgroundColor});
-
+  FluidNavBarIcon(
+      {@required this.iconPath,
+      this.selectedForegroundColor,
+      this.unselectedForegroundColor,
+      this.backgroundColor});
 }
