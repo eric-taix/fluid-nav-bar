@@ -4,4 +4,8 @@
   - fix compile error in FluidNavBarStyle with Dart >= 2.8
   - format dart files to be compliant with pub health suggestions
   - put all example code in example/lib/main.dart, so it is visible in pub example page
-:wq
+
+
+## [1.0.1] - Improvements
+  - fix inactivation animation which is now more synchronized with the wave
+  - add the FluidNavBarItemBuilder  
