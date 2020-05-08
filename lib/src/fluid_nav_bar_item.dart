@@ -94,7 +94,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
         Tween<double>(begin: 0.0, end: _iconSize).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(0.25, 0.38, curve: Curves.easeOut),
-      reverseCurve: Interval(0.5, 0.8, curve: Curves.easeInCirc),
+      reverseCurve: Interval(0.7, 1.0, curve: Curves.easeInCirc),
     ));
 
     var _animation = CurvedAnimation(
