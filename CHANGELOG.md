@@ -13,3 +13,6 @@
 ## [1.1.0] - Bump
   - Bump to lastest stable version of Flutter (1.20.1)
     
+## [1.1.1] - Fix version of flutter
+  - Bump to latest stable version of Flutter (1.20.0)
+    
