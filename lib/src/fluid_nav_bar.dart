@@ -7,7 +7,8 @@ import './curves.dart';
 
 typedef void FluidNavBarChangeCallback(int selectedIndex);
 
-typedef Widget FluidNavBarItemBuilder(FluidNavBarIcon icon, FluidNavBarItem item);
+typedef Widget FluidNavBarItemBuilder(
+    FluidNavBarIcon icon, FluidNavBarItem item);
 
 /// A widget to display a fluid navigation bar with icon buttons.
 ///
@@ -54,13 +55,14 @@ class FluidNavBar extends StatefulWidget {
   /// other widget
   final FluidNavBarItemBuilder itemBuilder;
 
-  FluidNavBar({Key key,
-    @required this.icons,
-    this.onChange,
-    this.style,
-    this.animationFactor = 1.0,
-    this.scaleFactor = 1.2,
-    FluidNavBarItemBuilder itemBuilder})
+  FluidNavBar(
+      {Key key,
+      @required this.icons,
+      this.onChange,
+      this.style,
+      this.animationFactor = 1.0,
+      this.scaleFactor = 1.2,
+      FluidNavBarItemBuilder itemBuilder})
       : this.itemBuilder = itemBuilder ?? _identityBuilder,
         assert(icons != null && icons.length > 1),
         super(key: key);
@@ -68,7 +70,8 @@ class FluidNavBar extends StatefulWidget {
   @override
   State createState() => _FluidNavBarState();
 
-  static Widget _identityBuilder(FluidNavBarIcon icon, FluidNavBarItem item) => item;
+  static Widget _identityBuilder(FluidNavBarIcon icon, FluidNavBarItem item) =>
+      item;
 }
 
 class _FluidNavBarState extends State<FluidNavBar>
@@ -95,10 +98,7 @@ class _FluidNavBarState extends State<FluidNavBar>
   @override
   void didChangeDependencies() {
     _xController.value =
-        _indexToPosition(_currentIndex) / MediaQuery
-            .of(context)
-            .size
-            .width;
+        _indexToPosition(_currentIndex) / MediaQuery.of(context).size.width;
     _yController.value = 1.0;
 
     super.didChangeDependencies();
@@ -113,9 +113,7 @@ class _FluidNavBarState extends State<FluidNavBar>
 
   @override
   Widget build(context) {
-    final appSize = MediaQuery
-        .of(context)
-        .size;
+    final appSize = MediaQuery.of(context).size;
     const height = FluidNavBar.nominalHeight;
 
     return Container(
@@ -147,10 +145,7 @@ class _FluidNavBarState extends State<FluidNavBar>
   Widget _buildBackground() {
     return CustomPaint(
       painter: _BackgroundCurvePainter(
-        _xController.value * MediaQuery
-            .of(context)
-            .size
-            .width,
+        _xController.value * MediaQuery.of(context).size.width,
         Tween<double>(
           begin: Curves.easeInExpo.transform(_yController.value),
           end: ElasticOutCurve(0.38).transform(_yController.value),
@@ -160,37 +155,37 @@ class _FluidNavBarState extends State<FluidNavBar>
     );
   }
 
-
   List<Widget> _buildButtons() {
     return widget.icons
         .asMap()
         .entries
-        .map((entry) =>
-        widget.itemBuilder(entry.value, FluidNavBarItem(
-          entry.value.iconPath,
-          _currentIndex == entry.key,
+        .map(
+          (entry) => widget.itemBuilder(
+            entry.value,
+            FluidNavBarItem(
+              entry.value.iconPath,
+              _currentIndex == entry.key,
               () => _handleTap(entry.key),
-          entry.value.selectedForegroundColor ??
-              widget?.style?.iconSelectedForegroundColor ??
-              Colors.black,
-          entry.value.unselectedForegroundColor ??
-              widget?.style?.iconUnselectedForegroundColor ??
-              Colors.grey,
-          entry.value.backgroundColor ??
-              widget?.style?.iconBackgroundColor ??
-              widget?.style?.barBackgroundColor ??
-              Colors.white,
-          widget.scaleFactor,
-          widget.animationFactor,
-        ),),)
+              entry.value.selectedForegroundColor ??
+                  widget?.style?.iconSelectedForegroundColor ??
+                  Colors.black,
+              entry.value.unselectedForegroundColor ??
+                  widget?.style?.iconUnselectedForegroundColor ??
+                  Colors.grey,
+              entry.value.backgroundColor ??
+                  widget?.style?.iconBackgroundColor ??
+                  widget?.style?.barBackgroundColor ??
+                  Colors.white,
+              widget.scaleFactor,
+              widget.animationFactor,
+            ),
+          ),
+        )
         .toList();
   }
 
   double _getButtonContainerWidth() {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double width = MediaQuery.of(context).size.width;
     if (width > 400.0) {
       width = 400.0;
     }
@@ -201,10 +196,7 @@ class _FluidNavBarState extends State<FluidNavBar>
     // Calculate button positions based off of their
     // index (works with `MainAxisAlignment.spaceAround`)
     var buttonCount = widget.icons.length;
-    final appWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final appWidth = MediaQuery.of(context).size.width;
     final buttonsWidth = _getButtonContainerWidth();
     final startX = (appWidth - buttonsWidth) / 2;
     return startX +
@@ -221,14 +213,11 @@ class _FluidNavBarState extends State<FluidNavBar>
 
     _yController.value = 1.0;
     _xController.animateTo(
-        _indexToPosition(index) / MediaQuery
-            .of(context)
-            .size
-            .width,
+        _indexToPosition(index) / MediaQuery.of(context).size.width,
         duration: Duration(milliseconds: 620) * widget.animationFactor);
     Future.delayed(
       Duration(milliseconds: 500) * widget.animationFactor,
-          () {
+      () {
         _yController.animateTo(1.0,
             duration: Duration(milliseconds: 1200) * widget.animationFactor);
       },
@@ -272,15 +261,15 @@ class _BackgroundCurvePainter extends CustomPainter {
     final norm = LinearPointCurve(0.5, 2.0).transform(_normalizedY) / 2;
 
     final radius =
-    Tween<double>(begin: _radiusTop, end: _radiusBottom).transform(norm);
+        Tween<double>(begin: _radiusTop, end: _radiusBottom).transform(norm);
     // Point colinear to the top edge of the background pane
     final anchorControlOffset = Tween<double>(
-        begin: radius * _horizontalControlTop,
-        end: radius * _horizontalControlBottom)
+            begin: radius * _horizontalControlTop,
+            end: radius * _horizontalControlBottom)
         .transform(LinearPointCurve(0.5, 0.75).transform(norm));
     // Point that slides up and down depending on distance for the target x position
     final dipControlOffset = Tween<double>(
-        begin: radius * _pointControlTop, end: radius * _pointControlBottom)
+            begin: radius * _pointControlTop, end: radius * _pointControlBottom)
         .transform(LinearPointCurve(0.5, 0.8).transform(norm));
     final y = Tween<double>(begin: _topY, end: _bottomY)
         .transform(LinearPointCurve(0.2, 0.7).transform(norm));
@@ -297,10 +286,11 @@ class _BackgroundCurvePainter extends CustomPainter {
       ..lineTo(x1, y)
       ..cubicTo(x1 + dipControlOffset, y, x1 + radius - anchorControlOffset, 0,
           x1 + radius, 0)
-      ..lineTo(size.width, 0)..lineTo(size.width, size.height)..lineTo(0, size.height);
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height);
 
-    final paint = Paint()
-      ..color = _color;
+    final paint = Paint()..color = _color;
 
     canvas.drawPath(path, paint);
   }
