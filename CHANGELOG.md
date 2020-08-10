@@ -8,4 +8,8 @@
 
 ## [1.0.1] - Improvements
   - fix inactivation animation which is now more synchronized with the wave
-  - add the FluidNavBarItemBuilder  
+  - add the FluidNavBarItemBuilder
+  
+## [1.1.0] - Bump
+  - Bump to lastest stable version of Flutter (1.20.1)
+    
