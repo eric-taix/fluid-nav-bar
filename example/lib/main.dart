@@ -33,10 +33,22 @@ class _FluidNavBarDemoState extends State {
         body: _child,
         bottomNavigationBar: FluidNavBar(
           icons: [
-            FluidNavBarIcon(iconPath: "assets/home.svg", backgroundColor: Color(0xFF4285F4), extras: {"label":"home"}),
-            FluidNavBarIcon(iconPath: "assets/bookmark.svg", backgroundColor: Color(0xFFEC4134), extras: {"label":"bookmark"}),
-            FluidNavBarIcon(iconPath: "assets/partner.svg", backgroundColor: Color(0xFFFCBA02), extras: {"label":"partner"}),
-            FluidNavBarIcon(iconPath: "assets/conference.svg", backgroundColor: Color(0xFF34A950), extras: {"label":"conference"}),
+            FluidNavBarIcon(
+                iconPath: "assets/home.svg",
+                backgroundColor: Color(0xFF4285F4),
+                extras: {"label": "home"}),
+            FluidNavBarIcon(
+                iconPath: "assets/bookmark.svg",
+                backgroundColor: Color(0xFFEC4134),
+                extras: {"label": "bookmark"}),
+            FluidNavBarIcon(
+                iconPath: "assets/partner.svg",
+                backgroundColor: Color(0xFFFCBA02),
+                extras: {"label": "partner"}),
+            FluidNavBarIcon(
+                iconPath: "assets/conference.svg",
+                backgroundColor: Color(0xFF34A950),
+                extras: {"label": "conference"}),
           ],
           onChange: _handleNavigationChange,
           style: FluidNavBarStyle(iconUnselectedForegroundColor: Colors.white),

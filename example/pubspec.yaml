@@ -1,10 +1,10 @@
 name: example
 description: A fluid bottom navigation bar example
 
-version: 1.0.0+1
+version: 1.1.0
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
