@@ -55,6 +55,8 @@ class FluidNavBar extends StatefulWidget {
   /// other widget
   final FluidNavBarItemBuilder itemBuilder;
 
+  final int initialIndex;
+
   FluidNavBar(
       {Key key,
       @required this.icons,
@@ -62,6 +64,7 @@ class FluidNavBar extends StatefulWidget {
       this.style,
       this.animationFactor = 1.0,
       this.scaleFactor = 1.2,
+      this.initialIndex = 0,
       FluidNavBarItemBuilder itemBuilder})
       : this.itemBuilder = itemBuilder ?? _identityBuilder,
         assert(icons != null && icons.length > 1),
@@ -84,6 +87,8 @@ class _FluidNavBarState extends State<FluidNavBar>
   @override
   void initState() {
     super.initState();
+
+    this._currentIndex = widget.initialIndex;
 
     _xController = AnimationController(
         vsync: this, animationBehavior: AnimationBehavior.preserve);
