@@ -47,22 +47,27 @@ class FluidNavBar extends StatefulWidget {
 
   /// The scale factor used when an icon is tapped
   /// 1.0 means that the icon is not scaled and 1.5 means the icons is scaled to +50%
-  final double scaleFactor;
-
   /// An optional builder to change or wrap the builded item
   ///
   /// This is where you can wrap the item with semantic or
   /// other widget
+  final double scaleFactor;
+
+  /// Default Index is used for setting up selected item on start of the application.
+  /// By default set to 0, meaning that item with index 0 will be selected.
+  final int defaultIndex;
+
   final FluidNavBarItemBuilder itemBuilder;
 
   FluidNavBar(
       {Key key,
-      @required this.icons,
-      this.onChange,
-      this.style,
-      this.animationFactor = 1.0,
-      this.scaleFactor = 1.2,
-      FluidNavBarItemBuilder itemBuilder})
+        @required this.icons,
+        this.onChange,
+        this.style,
+        this.animationFactor = 1.0,
+        this.scaleFactor = 1.2,
+        this.defaultIndex = 0,
+        FluidNavBarItemBuilder itemBuilder})
       : this.itemBuilder = itemBuilder ?? _identityBuilder,
         assert(icons != null && icons.length > 1),
         super(key: key);
@@ -84,6 +89,8 @@ class _FluidNavBarState extends State<FluidNavBar>
   @override
   void initState() {
     super.initState();
+
+    _currentIndex = widget.defaultIndex;
 
     _xController = AnimationController(
         vsync: this, animationBehavior: AnimationBehavior.preserve);

@@ -144,6 +144,7 @@ There are also few options, you can play with. They are global options and acces
 |-------|------|  
 | `animationFactor` | Set the factor to boost or slowdown animation. The default value is 1.0. If you use a value < 1 then the animation will be faster, if you use a value > 1 the animation will be slower |  
 | `scaleFactor` | Define the factor used by the animation to zoom the selected icon. The default value is 1.2. If the value is > 1 then it is a zoom-in, if you use a value < 1 then it is zoom-out |  
+| `defaultIndex` | Set to change selected item on start of the application. By default set to 0. |  
 
 
 For an `animationFactor` of 2.0 (slower) and a `scaleFactor` of 2.0 (a zoom-in bigger than the default one), the result is:  
