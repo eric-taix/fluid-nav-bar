@@ -38,11 +38,11 @@ class _FluidNavBarDemoState extends State {
                 backgroundColor: Color(0xFF4285F4),
                 extras: {"label": "home"}),
             FluidNavBarIcon(
-                iconPath: "assets/bookmark.svg",
+                icon: Icons.bookmark_border,
                 backgroundColor: Color(0xFFEC4134),
                 extras: {"label": "bookmark"}),
             FluidNavBarIcon(
-                iconPath: "assets/partner.svg",
+                icon: Icons.apps,
                 backgroundColor: Color(0xFFFCBA02),
                 extras: {"label": "partner"}),
             FluidNavBarIcon(
