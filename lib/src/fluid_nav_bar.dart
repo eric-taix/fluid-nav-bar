@@ -171,6 +171,7 @@ class _FluidNavBarState extends State<FluidNavBar>
             entry.value,
             FluidNavBarItem(
               entry.value.iconPath,
+              entry.value.icon,
               _currentIndex == entry.key,
               () => _handleTap(entry.key),
               entry.value.selectedForegroundColor ??

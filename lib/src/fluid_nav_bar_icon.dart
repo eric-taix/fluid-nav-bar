@@ -10,6 +10,9 @@ class FluidNavBarIcon {
   /// The path of the SVG asset
   final String iconPath;
 
+  // The icon data
+  final IconData icon;
+
   /// The color used to paint the SVG when the item is active
   final Color selectedForegroundColor;
 
@@ -23,10 +26,14 @@ class FluidNavBarIcon {
   final Map<String, dynamic> extras;
 
   FluidNavBarIcon({
-    @required this.iconPath,
+    this.iconPath,
+    this.icon,
     this.selectedForegroundColor,
     this.unselectedForegroundColor,
     this.backgroundColor,
     this.extras,
-  });
+  })  : assert(iconPath == null || icon == null,
+            'Cannot provide both an iconPath and an icon.'),
+        assert(iconPath != null || icon != null,
+            'An iconPath or an icon must be provided.');
 }

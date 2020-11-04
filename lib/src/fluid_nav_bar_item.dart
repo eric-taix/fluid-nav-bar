@@ -24,6 +24,9 @@ class FluidNavBarItem extends StatefulWidget {
   /// The path of the SVG asset
   final String iconPath;
 
+  // The icon data
+  final IconData icon;
+
   /// Flag to know if this item is active or not
   final bool selected;
 
@@ -47,6 +50,7 @@ class FluidNavBarItem extends StatefulWidget {
 
   FluidNavBarItem(
     this.iconPath,
+    this.icon,
     this.selected,
     this.onTap,
     this.selectedForegroundColor,
@@ -54,7 +58,11 @@ class FluidNavBarItem extends StatefulWidget {
     this.backgroundColor,
     this.scaleFactor,
     this.animationFactor,
-  ) : assert(scaleFactor >= 1.0);
+  )   : assert(scaleFactor >= 1.0),
+        assert(iconPath == null || icon == null,
+            'Cannot provide both an iconPath and an icon.'),
+        assert(!(iconPath == null && icon == null),
+            'An iconPath or an icon must be provided.');
 
   @override
   State createState() {
@@ -164,27 +172,41 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
           transform: Matrix4.translationValues(0, -_yOffsetAnimation.value, 0),
           child: Stack(children: <Widget>[
             Container(
-                alignment: Alignment.center,
-                child: SvgPicture.asset(
-                  widget.iconPath,
-                  color: widget.unselectedForegroundColor,
-                  width: _iconSize,
-                  height: _iconSize * scaleAnimation.value,
-                  colorBlendMode: BlendMode.srcIn,
-                )),
-            Container(
-                alignment: Alignment.center,
-                child: ClipRect(
-                  clipper: _SvgPictureClipper(
-                      _activeColorClipAnimation.value * scaleAnimation.value),
-                  child: SvgPicture.asset(
-                    widget.iconPath,
-                    color: widget.selectedForegroundColor,
-                    width: _iconSize,
-                    height: _iconSize * scaleAnimation.value,
-                    colorBlendMode: BlendMode.srcIn,
+              alignment: Alignment.center,
+              child: widget.icon == null
+                  ? SvgPicture.asset(
+                      widget.iconPath,
+                      color: widget.unselectedForegroundColor,
+                      width: _iconSize,
+                      height: _iconSize * scaleAnimation.value,
+                      colorBlendMode: BlendMode.srcIn,
+                    )
+                  : Icon(
+                    widget.icon,
+                    color: widget.unselectedForegroundColor,
+                    size: _iconSize * scaleAnimation.value,
                   ),
-                )),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: ClipRect(
+                clipper: _SvgPictureClipper(
+                    _activeColorClipAnimation.value * scaleAnimation.value),
+                child: widget.icon == null
+                    ? SvgPicture.asset(
+                        widget.iconPath,
+                        color: widget.selectedForegroundColor,
+                        width: _iconSize,
+                        height: _iconSize * scaleAnimation.value,
+                        colorBlendMode: BlendMode.srcIn,
+                      )
+                    : Icon(
+                      widget.icon,
+                      color: widget.selectedForegroundColor,
+                      size: _iconSize * scaleAnimation.value,
+                    ),
+              ),
+            ),
           ]),
         ),
       ),
