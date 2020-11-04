@@ -26,8 +26,8 @@ The example below shows you the minimal code to use the widget.
         body: _theBody,
         bottomNavigationBar: FluidNavBar(                     // (1)
           icons: [                                            // (2)
-            FluidNavBarIcon(iconPath: "assets/home.svg"),     // (3)
-            FluidNavBarIcon(iconPath: "assets/bookmark.svg"),
+            FluidNavBarIcon(svgPath: "assets/home.svg"),      // (3)
+            FluidNavBarIcon(svgPath: "assets/bookmark.svg"),
           ],
           onChange: _handleNavigationChange,                  // (4)
         ),
@@ -37,10 +37,32 @@ The example below shows you the minimal code to use the widget.
 ```
 (1) Create an instance of `FluidNavBar`  
 (2) Set the icons, of type `FluidNavBarIcon`, to display in the navigation bar  
-(3) `FluidNavBarIcon` supports only SVG  
+(3) `FluidNavBarIcon` supports SVG asset or `IconData`  
 (4) Set the callback to react when the user tap an icon (the callback parameter contains the icon's index)   
 
 ![basic usage sample](./doc/basic-usage.gif)
+
+When defining `FluidNavBarIcon` you can provide an SVG asset or an `IconData`. Use the field `svgPath` for an SVG or 
+the field `icon` for an `IconData`.  
+
+Example: 
+```dart
+FluidNavBar(
+          icons: [
+            FluidNavBarIcon(
+                svgPath: "assets/home.svg",
+                backgroundColor: Color(0xFF4285F4),
+                extras: {"label": "home"}),
+            FluidNavBarIcon(
+                icon: Icons.bookmark_border,
+                backgroundColor: Color(0xFFEC4134),
+                extras: {"label": "bookmark"}),
+          ],
+``` 
+
+**Note:** For backward compatibility (previous to v1.2.0) you can still use the field `iconPath` to set
+the SVG asset to use (this is the same behaviour of `svgPath`). But this field has been deprecated and will
+be removed in a future version.
 
 ## How To Style
 
@@ -62,8 +84,8 @@ in the `style` property of the `FluidNavBar`:
 ```dart
 FluidNavBar(
   icons: [
-    FluidNavBarIcon(iconPath: "assets/home.svg"),
-    FluidNavBarIcon(iconPath: "assets/bookmark.svg"),
+    FluidNavBarIcon(svgPath: "assets/home.svg"),
+    FluidNavBarIcon(svgPath: "assets/bookmark.svg"),
   ],
   onChange: _handleNavigationChange,
   style: FluidNavBarStyle(
@@ -95,10 +117,10 @@ You can also define some specific styles per icon, by using optional parameters 
 ```dart
 FluidNavBar(
   icons: [
-    FluidNavBarIcon(iconPath: "assets/home.svg", backgroundColor: Color(0xFF4285F4)),
-    FluidNavBarIcon(iconPath: "assets/bookmark.svg", backgroundColor: Color(0xFFEC4134)),
-    FluidNavBarIcon(iconPath: "assets/partner.svg", backgroundColor: Color(0xFFFCBA02)),
-    FluidNavBarIcon(iconPath: "assets/conference.svg", backgroundColor: Color(0xFF34A950)),
+    FluidNavBarIcon(svgPath: "assets/home.svg", backgroundColor: Color(0xFF4285F4)),
+    FluidNavBarIcon(svgPath: "assets/bookmark.svg", backgroundColor: Color(0xFFEC4134)),
+    FluidNavBarIcon(svgPath: "assets/partner.svg", backgroundColor: Color(0xFFFCBA02)),
+    FluidNavBarIcon(svgPath: "assets/conference.svg", backgroundColor: Color(0xFF34A950)),
   ],
   onChange: _handleNavigationChange,
   style: FluidNavBarStyle(
@@ -156,3 +178,11 @@ For an `animationFactor` of 2.0 (slower) and a `scaleFactor` of 2.0 (a zoom-in b
 Feel free to create an issue if you find a bug or if you need new features. Of course PRs are welcome!  
 
 If you want to contact me on Twitter: @etaix
+
+### Contributors
+
+Many thanks to these contributors:  
+  - Umair M
+  - Dmitriy Govorov
+  - Christos Tsortanidis  
+  - Dorbmon
