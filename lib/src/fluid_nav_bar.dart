@@ -2,8 +2,8 @@ import 'package:fluid_bottom_nav_bar/src/fluid_nav_bar_icon.dart';
 import 'package:fluid_bottom_nav_bar/src/fluid_nav_bar_style.dart';
 import 'package:flutter/material.dart';
 
-import './fluid_nav_bar_item.dart';
 import './curves.dart';
+import './fluid_nav_bar_item.dart';
 
 typedef void FluidNavBarChangeCallback(int selectedIndex);
 
@@ -61,13 +61,13 @@ class FluidNavBar extends StatefulWidget {
 
   FluidNavBar(
       {Key key,
-        @required this.icons,
-        this.onChange,
-        this.style,
-        this.animationFactor = 1.0,
-        this.scaleFactor = 1.2,
-        this.defaultIndex = 0,
-        FluidNavBarItemBuilder itemBuilder})
+      @required this.icons,
+      this.onChange,
+      this.style,
+      this.animationFactor = 1.0,
+      this.scaleFactor = 1.2,
+      this.defaultIndex = 0,
+      FluidNavBarItemBuilder itemBuilder})
       : this.itemBuilder = itemBuilder ?? _identityBuilder,
         assert(icons != null && icons.length > 1),
         super(key: key);
@@ -170,7 +170,7 @@ class _FluidNavBarState extends State<FluidNavBar>
           (entry) => widget.itemBuilder(
             entry.value,
             FluidNavBarItem(
-              entry.value.iconPath,
+              entry.value.svgPath ?? entry.value.iconPath,
               entry.value.icon,
               _currentIndex == entry.key,
               () => _handleTap(entry.key),

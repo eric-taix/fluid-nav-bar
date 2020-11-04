@@ -13,3 +13,7 @@
 ## [1.1.0] - Bump
   - Bump to lastest stable version of Flutter (1.20.1)
     
+## [1.2.0] - Improvements
+  - add the ability to use an IconData instead of a SVG asset  
+  - add the ability to define the default selected index 
+      

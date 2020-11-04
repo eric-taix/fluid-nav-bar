@@ -1,7 +1,7 @@
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:fluid_bottom_nav_bar/src/fluid_nav_bar_icon.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'curves.dart';
@@ -22,7 +22,7 @@ class FluidNavBarItem extends StatefulWidget {
   static const nominalExtent = const Size(64, 64);
 
   /// The path of the SVG asset
-  final String iconPath;
+  final String svgPath;
 
   // The icon data
   final IconData icon;
@@ -49,7 +49,7 @@ class FluidNavBarItem extends StatefulWidget {
   final double animationFactor;
 
   FluidNavBarItem(
-    this.iconPath,
+    this.svgPath,
     this.icon,
     this.selected,
     this.onTap,
@@ -59,9 +59,9 @@ class FluidNavBarItem extends StatefulWidget {
     this.scaleFactor,
     this.animationFactor,
   )   : assert(scaleFactor >= 1.0),
-        assert(iconPath == null || icon == null,
+        assert(svgPath == null || icon == null,
             'Cannot provide both an iconPath and an icon.'),
-        assert(!(iconPath == null && icon == null),
+        assert(!(svgPath == null && icon == null),
             'An iconPath or an icon must be provided.');
 
   @override
@@ -175,17 +175,17 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
               alignment: Alignment.center,
               child: widget.icon == null
                   ? SvgPicture.asset(
-                      widget.iconPath,
+                      widget.svgPath,
                       color: widget.unselectedForegroundColor,
                       width: _iconSize,
                       height: _iconSize * scaleAnimation.value,
                       colorBlendMode: BlendMode.srcIn,
                     )
                   : Icon(
-                    widget.icon,
-                    color: widget.unselectedForegroundColor,
-                    size: _iconSize * scaleAnimation.value,
-                  ),
+                      widget.icon,
+                      color: widget.unselectedForegroundColor,
+                      size: _iconSize * scaleAnimation.value,
+                    ),
             ),
             Container(
               alignment: Alignment.center,
@@ -194,17 +194,17 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
                     _activeColorClipAnimation.value * scaleAnimation.value),
                 child: widget.icon == null
                     ? SvgPicture.asset(
-                        widget.iconPath,
+                        widget.svgPath,
                         color: widget.selectedForegroundColor,
                         width: _iconSize,
                         height: _iconSize * scaleAnimation.value,
                         colorBlendMode: BlendMode.srcIn,
                       )
                     : Icon(
-                      widget.icon,
-                      color: widget.selectedForegroundColor,
-                      size: _iconSize * scaleAnimation.value,
-                    ),
+                        widget.icon,
+                        color: widget.selectedForegroundColor,
+                        size: _iconSize * scaleAnimation.value,
+                      ),
               ),
             ),
           ]),

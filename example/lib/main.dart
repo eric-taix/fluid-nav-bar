@@ -34,7 +34,7 @@ class _FluidNavBarDemoState extends State {
         bottomNavigationBar: FluidNavBar(
           icons: [
             FluidNavBarIcon(
-                iconPath: "assets/home.svg",
+                svgPath: "assets/home.svg",
                 backgroundColor: Color(0xFF4285F4),
                 extras: {"label": "home"}),
             FluidNavBarIcon(
@@ -46,7 +46,7 @@ class _FluidNavBarDemoState extends State {
                 backgroundColor: Color(0xFFFCBA02),
                 extras: {"label": "partner"}),
             FluidNavBarIcon(
-                iconPath: "assets/conference.svg",
+                svgPath: "assets/conference.svg",
                 backgroundColor: Color(0xFF34A950),
                 extras: {"label": "conference"}),
           ],
