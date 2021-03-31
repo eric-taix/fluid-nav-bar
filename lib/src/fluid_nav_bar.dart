@@ -69,7 +69,7 @@ class FluidNavBar extends StatefulWidget {
       this.defaultIndex = 0,
       FluidNavBarItemBuilder? itemBuilder})
       : this.itemBuilder = itemBuilder ?? _identityBuilder,
-        assert(icons != null && icons.length > 1),
+        assert(icons.length > 1),
         super(key: key);
 
   @override
@@ -157,7 +157,7 @@ class _FluidNavBarState extends State<FluidNavBar>
           begin: Curves.easeInExpo.transform(_yController!.value),
           end: ElasticOutCurve(0.38).transform(_yController!.value),
         ).transform(_yController!.velocity.sign * 0.5 + 0.5),
-        widget?.style?.barBackgroundColor ?? Colors.white,
+        widget.style?.barBackgroundColor ?? Colors.white,
       ),
     );
   }
@@ -175,14 +175,14 @@ class _FluidNavBarState extends State<FluidNavBar>
               _currentIndex == entry.key,
               () => _handleTap(entry.key),
               entry.value.selectedForegroundColor ??
-                  widget?.style?.iconSelectedForegroundColor ??
+                  widget.style?.iconSelectedForegroundColor ??
                   Colors.black,
               entry.value.unselectedForegroundColor ??
-                  widget?.style?.iconUnselectedForegroundColor ??
+                  widget.style?.iconUnselectedForegroundColor ??
                   Colors.grey,
               entry.value.backgroundColor ??
-                  widget?.style?.iconBackgroundColor ??
-                  widget?.style?.barBackgroundColor ??
+                  widget.style?.iconBackgroundColor ??
+                  widget.style?.barBackgroundColor ??
                   Colors.white,
               widget.scaleFactor,
               widget.animationFactor,

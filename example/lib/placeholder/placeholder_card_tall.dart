@@ -24,7 +24,7 @@ class PlaceholderCardTall extends StatelessWidget {
     var fgColor = color ?? Color(0xfff2f2f2);
     double lineHeight = 14;
     return Container(
-      width: width ?? double.infinity,
+      width: width,
       height: height ?? double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(cornerRadius),
