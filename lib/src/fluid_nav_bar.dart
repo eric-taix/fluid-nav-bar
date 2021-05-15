@@ -34,10 +34,10 @@ class FluidNavBar extends StatefulWidget {
   final List<FluidNavBarIcon> icons;
 
   /// A callback called when an icon has been tapped with its index
-  final FluidNavBarChangeCallback onChange;
+  final FluidNavBarChangeCallback? onChange;
 
   /// The style to use to paint the fluid navigation bar and its icons
-  final FluidNavBarStyle style;
+  final FluidNavBarStyle? style;
 
   /// Delay to adjust the overall delay of the animations
   ///   * < 1 is faster
@@ -60,14 +60,14 @@ class FluidNavBar extends StatefulWidget {
   final FluidNavBarItemBuilder itemBuilder;
 
   FluidNavBar(
-      {Key key,
-      @required this.icons,
+      {Key? key,
+      required this.icons,
       this.onChange,
       this.style,
       this.animationFactor = 1.0,
       this.scaleFactor = 1.2,
       this.defaultIndex = 0,
-      FluidNavBarItemBuilder itemBuilder})
+      FluidNavBarItemBuilder? itemBuilder})
       : this.itemBuilder = itemBuilder ?? _identityBuilder,
         assert(icons != null && icons.length > 1),
         super(key: key);
@@ -83,8 +83,8 @@ class _FluidNavBarState extends State<FluidNavBar>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
 
-  AnimationController _xController;
-  AnimationController _yController;
+  AnimationController? _xController;
+  AnimationController? _yController;
 
   @override
   void initState() {
@@ -104,17 +104,17 @@ class _FluidNavBarState extends State<FluidNavBar>
 
   @override
   void didChangeDependencies() {
-    _xController.value =
+    _xController!.value =
         _indexToPosition(_currentIndex) / MediaQuery.of(context).size.width;
-    _yController.value = 1.0;
+    _yController!.value = 1.0;
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _xController.dispose();
-    _yController.dispose();
+    _xController!.dispose();
+    _yController!.dispose();
     super.dispose();
   }
 
@@ -152,11 +152,11 @@ class _FluidNavBarState extends State<FluidNavBar>
   Widget _buildBackground() {
     return CustomPaint(
       painter: _BackgroundCurvePainter(
-        _xController.value * MediaQuery.of(context).size.width,
+        _xController!.value * MediaQuery.of(context).size.width,
         Tween<double>(
-          begin: Curves.easeInExpo.transform(_yController.value),
-          end: ElasticOutCurve(0.38).transform(_yController.value),
-        ).transform(_yController.velocity.sign * 0.5 + 0.5),
+          begin: Curves.easeInExpo.transform(_yController!.value),
+          end: ElasticOutCurve(0.38).transform(_yController!.value),
+        ).transform(_yController!.velocity.sign * 0.5 + 0.5),
         widget?.style?.barBackgroundColor ?? Colors.white,
       ),
     );
@@ -213,28 +213,28 @@ class _FluidNavBarState extends State<FluidNavBar>
   }
 
   void _handleTap(int index) {
-    if (_currentIndex == index || _xController.isAnimating) return;
+    if (_currentIndex == index || _xController!.isAnimating) return;
 
     setState(() {
       _currentIndex = index;
     });
 
-    _yController.value = 1.0;
-    _xController.animateTo(
+    _yController!.value = 1.0;
+    _xController!.animateTo(
         _indexToPosition(index) / MediaQuery.of(context).size.width,
         duration: Duration(milliseconds: 620) * widget.animationFactor);
     Future.delayed(
       Duration(milliseconds: 500) * widget.animationFactor,
       () {
-        _yController.animateTo(1.0,
+        _yController!.animateTo(1.0,
             duration: Duration(milliseconds: 1200) * widget.animationFactor);
       },
     );
-    _yController.animateTo(0.0,
+    _yController!.animateTo(0.0,
         duration: Duration(milliseconds: 300) * widget.animationFactor);
 
     if (widget.onChange != null) {
-      widget.onChange(index);
+      widget.onChange!(index);
     }
   }
 }
