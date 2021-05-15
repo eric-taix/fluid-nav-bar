@@ -1,16 +1,17 @@
 name: example
 description: A fluid bottom navigation bar example
+publish_to: none
 
-version: 1.1.0
+version: 1.2.0
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.3
 
   fluid_bottom_nav_bar:
     path: ../

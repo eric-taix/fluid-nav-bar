@@ -4,18 +4,13 @@ import 'package:flutter/material.dart';
 
 class PlaceholderCardTall extends StatelessWidget {
   final double width;
-  final double height;
+  final double? height;
   final double cornerRadius;
-  final Color color;
-  final Color backgroundColor;
+  final Color? color;
+  final Color? backgroundColor;
 
   const PlaceholderCardTall(
-      {Key key,
-      this.cornerRadius = 4,
-      this.color,
-      this.backgroundColor,
-      this.width = 400,
-      this.height})
+      {Key? key, this.cornerRadius = 4, this.color, this.backgroundColor, this.width = 400, this.height})
       : super(key: key);
 
   @override
@@ -24,7 +19,7 @@ class PlaceholderCardTall extends StatelessWidget {
     var fgColor = color ?? Color(0xfff2f2f2);
     double lineHeight = 14;
     return Container(
-      width: width ?? double.infinity,
+      width: width,
       height: height ?? double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(cornerRadius),
@@ -35,8 +30,7 @@ class PlaceholderCardTall extends StatelessWidget {
         children: <Widget>[
           //Circle image
           Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(999), color: fgColor),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(999), color: fgColor),
             height: 45,
             width: 45,
           ),
@@ -48,28 +42,16 @@ class PlaceholderCardTall extends StatelessWidget {
               width: 100.0 + r.nextInt(100)),
 
           //Content Line
-          Container(
-              margin: EdgeInsets.only(top: 60, right: 10.0 + r.nextInt(60)),
-              color: fgColor,
-              height: lineHeight),
+          Container(margin: EdgeInsets.only(top: 60, right: 10.0 + r.nextInt(60)), color: fgColor, height: lineHeight),
 
           //Content Line
-          Container(
-              margin: EdgeInsets.only(top: 85, right: 10.0 + r.nextInt(60)),
-              color: fgColor,
-              height: lineHeight),
+          Container(margin: EdgeInsets.only(top: 85, right: 10.0 + r.nextInt(60)), color: fgColor, height: lineHeight),
 
           //Content Line
-          Container(
-              margin: EdgeInsets.only(top: 110, right: 10.0 + r.nextInt(60)),
-              color: fgColor,
-              height: lineHeight),
+          Container(margin: EdgeInsets.only(top: 110, right: 10.0 + r.nextInt(60)), color: fgColor, height: lineHeight),
 
           //Content Line
-          Container(
-              margin: EdgeInsets.only(top: 135, right: 60.0 + r.nextInt(60)),
-              color: fgColor,
-              height: lineHeight),
+          Container(margin: EdgeInsets.only(top: 135, right: 60.0 + r.nextInt(60)), color: fgColor, height: lineHeight),
         ],
       ),
     );

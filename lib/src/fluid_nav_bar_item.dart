@@ -22,10 +22,10 @@ class FluidNavBarItem extends StatefulWidget {
   static const nominalExtent = const Size(64, 64);
 
   /// The path of the SVG asset
-  final String svgPath;
+  final String? svgPath;
 
   // The icon data
-  final IconData icon;
+  final IconData? icon;
 
   /// Flag to know if this item is active or not
   final bool selected;
@@ -78,11 +78,11 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
 
   bool _selected;
 
-  AnimationController _animationController;
-  Animation<double> _activeColorClipAnimation;
-  Animation<double> _yOffsetAnimation;
-  Animation<double> _activatingAnimation;
-  Animation<double> _inactivatingAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _activeColorClipAnimation;
+  late Animation<double> _yOffsetAnimation;
+  late Animation<double> _activatingAnimation;
+  late Animation<double> _inactivatingAnimation;
 
   _FluidNavBarItemState(this._selected);
 
@@ -175,7 +175,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
               alignment: Alignment.center,
               child: widget.icon == null
                   ? SvgPicture.asset(
-                      widget.svgPath,
+                      widget.svgPath!,
                       color: widget.unselectedForegroundColor,
                       width: _iconSize,
                       height: _iconSize * scaleAnimation.value,
@@ -194,7 +194,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
                     _activeColorClipAnimation.value * scaleAnimation.value),
                 child: widget.icon == null
                     ? SvgPicture.asset(
-                        widget.svgPath,
+                        widget.svgPath!,
                         color: widget.selectedForegroundColor,
                         width: _iconSize,
                         height: _iconSize * scaleAnimation.value,

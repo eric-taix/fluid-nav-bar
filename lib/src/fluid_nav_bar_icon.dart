@@ -9,25 +9,25 @@ import 'package:flutter/cupertino.dart';
 class FluidNavBarIcon {
   /// The path of the SVG asset
   @deprecated
-  final String iconPath;
+  final String? iconPath;
 
   /// The SVG path
-  final String svgPath;
+  final String? svgPath;
 
   /// The icon data
-  final IconData icon;
+  final IconData? icon;
 
   /// The color used to paint the SVG when the item is active
-  final Color selectedForegroundColor;
+  final Color? selectedForegroundColor;
 
   /// The color used to paint the SVG when the item is inactive
-  final Color unselectedForegroundColor;
+  final Color? unselectedForegroundColor;
 
   /// The background color of the item
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
-  /// Extra informations which can be used in [FluidNavBarItemBuilder]
-  final Map<String, dynamic> extras;
+  /// Extra information which can be used in [FluidNavBarItemBuilder]
+  final Map<String, dynamic>? extras;
 
   FluidNavBarIcon({
     this.iconPath,
@@ -37,8 +37,6 @@ class FluidNavBarIcon {
     this.unselectedForegroundColor,
     this.backgroundColor,
     this.extras,
-  })  : assert(iconPath == null || svgPath == null || icon == null,
-            'Cannot provide both an svgPath and an icon.'),
-        assert(iconPath != null || svgPath != null || icon != null,
-            'An svgPath or an icon must be provided.');
+  })  : assert(iconPath == null || svgPath == null || icon == null, 'Cannot provide both an svgPath and an icon.'),
+        assert(iconPath != null || svgPath != null || icon != null, 'An svgPath or an icon must be provided.');
 }

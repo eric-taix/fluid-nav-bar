@@ -15,7 +15,7 @@ class FluidNavBarDemo extends StatefulWidget {
 }
 
 class _FluidNavBarDemoState extends State {
-  Widget _child;
+  Widget? _child;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class _FluidNavBarDemoState extends State {
           scaleFactor: 1.5,
           defaultIndex: 1,
           itemBuilder: (icon, item) => Semantics(
-            label: icon.extras["label"],
+            label: icon.extras!["label"],
             child: item,
           ),
         ),
