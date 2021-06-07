@@ -21,3 +21,6 @@
 ## [1.3.0] - Null safety
   - This library is now null-safety
   - ! Breaking change: deprecated `iconPath` field has been removed, use `svgPath` instead
+
+## [1.4.0] - Add RTL support
+  - This library is now support Right To Left
