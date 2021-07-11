@@ -56,6 +56,7 @@ class FluidNavBar extends StatefulWidget {
   /// Default Index is used for setting up selected item on start of the application.
   /// By default set to 0, meaning that item with index 0 will be selected.
   final int defaultIndex;
+  final int currentIndex;
 
   final FluidNavBarItemBuilder itemBuilder;
   final TextDirection? textDirection;
@@ -68,6 +69,7 @@ class FluidNavBar extends StatefulWidget {
     this.animationFactor = 1.0,
     this.scaleFactor = 1.2,
     this.defaultIndex = 0,
+    this.currentIndex = 0,
     this.textDirection,
     FluidNavBarItemBuilder? itemBuilder,
   })  : this.itemBuilder = itemBuilder ?? _identityBuilder,
@@ -83,7 +85,7 @@ class FluidNavBar extends StatefulWidget {
 
 class _FluidNavBarState extends State<FluidNavBar>
     with TickerProviderStateMixin {
-  int _currentIndex = 0;
+  int get _currentIndex => widget.currentIndex;
 
   late final AnimationController _xController;
   late final AnimationController _yController;
@@ -94,8 +96,6 @@ class _FluidNavBarState extends State<FluidNavBar>
   @override
   void initState() {
     super.initState();
-
-    _currentIndex = widget.defaultIndex;
 
     _xController = AnimationController(
         vsync: this, animationBehavior: AnimationBehavior.preserve);
@@ -230,9 +230,9 @@ class _FluidNavBarState extends State<FluidNavBar>
   void _handleTap(int index) {
     if (_currentIndex == index || _xController.isAnimating) return;
 
-    setState(() {
-      _currentIndex = index;
-    });
+    // setState(() {
+    //   _currentIndex = index;
+    // });
 
     _yController.value = 1.0;
     _xController.animateTo(
