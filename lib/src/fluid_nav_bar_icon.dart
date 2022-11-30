@@ -7,6 +7,18 @@ import 'package:flutter/cupertino.dart';
 ///  * [FluidNavBar]
 
 class FluidNavBarIcon {
+  /// The badge amount
+  final int? badge;
+
+  // The background color of the badge container
+  final Color? badgeBackgroundColor;
+
+  // The color used to badge text
+  final Color? badgeTextColor;
+
+  // The icon or svg size
+  final double? size;
+
   /// The path of the SVG asset
   @deprecated
   final String? iconPath;
@@ -30,6 +42,10 @@ class FluidNavBarIcon {
   final Map<String, dynamic>? extras;
 
   FluidNavBarIcon({
+    this.size,
+    this.badge,
+    this.badgeBackgroundColor,
+    this.badgeTextColor,
     this.iconPath,
     this.svgPath,
     this.icon,

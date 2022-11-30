@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:fluid_bottom_nav_bar/src/fluid_nav_bar_icon.dart';
 import 'package:flutter/animation.dart';
@@ -20,6 +22,18 @@ typedef void FluidNavBarButtonTappedCallback();
 
 class FluidNavBarItem extends StatefulWidget {
   static const nominalExtent = const Size(64, 64);
+
+  /// The badge amount
+  final int? badge;
+
+  // The background color of the badge container
+  final Color? badgeBackgroundColor;
+
+  // The color used to badge text
+  final Color? badgeTextColor;
+
+  // The icon or svg size
+  final double? size;
 
   /// The path of the SVG asset
   final String? svgPath;
@@ -48,21 +62,23 @@ class FluidNavBarItem extends StatefulWidget {
   /// The delay factor of the animations ( < 1 is faster, > 1 is slower)
   final double animationFactor;
 
-  FluidNavBarItem(
+  FluidNavBarItem({
+    this.size,
+    this.badge,
+    this.badgeBackgroundColor,
+    this.badgeTextColor,
     this.svgPath,
     this.icon,
-    this.selected,
-    this.onTap,
-    this.selectedForegroundColor,
-    this.unselectedForegroundColor,
-    this.backgroundColor,
-    this.scaleFactor,
-    this.animationFactor,
-  )   : assert(scaleFactor >= 1.0),
-        assert(svgPath == null || icon == null,
-            'Cannot provide both an iconPath and an icon.'),
-        assert(!(svgPath == null && icon == null),
-            'An iconPath or an icon must be provided.');
+    required this.selected,
+    required this.onTap,
+    required this.selectedForegroundColor,
+    required this.unselectedForegroundColor,
+    required this.backgroundColor,
+    required this.scaleFactor,
+    required this.animationFactor,
+  })  : assert(scaleFactor >= 1.0),
+        assert(svgPath == null || icon == null, 'Cannot provide both an iconPath and an icon.'),
+        assert(!(svgPath == null && icon == null), 'An iconPath or an icon must be provided.');
 
   @override
   State createState() {
@@ -70,8 +86,7 @@ class FluidNavBarItem extends StatefulWidget {
   }
 }
 
-class _FluidNavBarItemState extends State<FluidNavBarItem>
-    with SingleTickerProviderStateMixin {
+class _FluidNavBarItemState extends State<FluidNavBarItem> with SingleTickerProviderStateMixin {
   static const double _activeOffset = 16;
   static const double _defaultOffset = 0;
   static const double _iconSize = 25;
@@ -83,6 +98,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
   late Animation<double> _yOffsetAnimation;
   late Animation<double> _activatingAnimation;
   late Animation<double> _inactivatingAnimation;
+  late Animation<Color?> _activateBadgeColor;
 
   _FluidNavBarItemState(this._selected);
 
@@ -93,23 +109,24 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
     double waveRatio = 0.28;
     _animationController = AnimationController(
       duration: Duration(milliseconds: (1600 * widget.animationFactor).toInt()),
-      reverseDuration:
-          Duration(milliseconds: (1000 * widget.animationFactor).toInt()),
+      reverseDuration: Duration(milliseconds: (1000 * widget.animationFactor).toInt()),
       vsync: this,
     )..addListener(() => setState(() {}));
 
-    _activeColorClipAnimation =
-        Tween<double>(begin: 0.0, end: _iconSize).animate(CurvedAnimation(
+    _activeColorClipAnimation = Tween<double>(begin: 0.0, end: (widget.size ?? _iconSize)).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(0.25, 0.38, curve: Curves.easeOut),
       reverseCurve: Interval(0.7, 1.0, curve: Curves.easeInCirc),
     ));
 
-    var _animation = CurvedAnimation(
-        parent: _animationController, curve: LinearPointCurve(waveRatio, 0.0));
+    _activateBadgeColor = ColorTween(
+      begin: Colors.grey,
+      end: widget.badgeBackgroundColor ?? Colors.red[700],
+    ).animate(_animationController);
 
-    _yOffsetAnimation = Tween<double>(begin: _defaultOffset, end: _activeOffset)
-        .animate(CurvedAnimation(
+    var _animation = CurvedAnimation(parent: _animationController, curve: LinearPointCurve(waveRatio, 0.0));
+
+    _yOffsetAnimation = Tween<double>(begin: _defaultOffset, end: _activeOffset).animate(CurvedAnimation(
       parent: _animation,
       curve: ElasticOutCurve(0.38),
       reverseCurve: Curves.easeInCirc,
@@ -118,8 +135,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
     var activatingHalfTween = Tween<double>(begin: 1, end: widget.scaleFactor);
     _activatingAnimation = TweenSequence([
       TweenSequenceItem(tween: activatingHalfTween, weight: 50.0),
-      TweenSequenceItem(
-          tween: ReverseTween<double>(activatingHalfTween), weight: 50.0),
+      TweenSequenceItem(tween: ReverseTween<double>(activatingHalfTween), weight: 50.0),
     ]).animate(CurvedAnimation(
       parent: _animation,
       curve: Interval(0.0, 0.3),
@@ -153,8 +169,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
   Widget build(context) {
     const ne = FluidNavBarItem.nominalExtent;
 
-    final scaleAnimation =
-        _selected ? _activatingAnimation : _inactivatingAnimation;
+    final scaleAnimation = _selected ? _activatingAnimation : _inactivatingAnimation;
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -163,51 +178,76 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
         constraints: BoxConstraints.tight(ne),
         alignment: Alignment.center,
         child: Container(
-          margin: EdgeInsets.all(ne.width / 2 - _iconSize),
-          constraints: BoxConstraints.tight(Size.square(_iconSize * 2)),
+          margin: EdgeInsets.all(ne.width / 2 - min(widget.size ?? _iconSize, _iconSize)),
+          constraints: BoxConstraints.tight(Size.square((widget.size ?? _iconSize) * 2)),
           decoration: ShapeDecoration(
             color: widget.backgroundColor,
             shape: CircleBorder(),
           ),
           transform: Matrix4.translationValues(0, -_yOffsetAnimation.value, 0),
-          child: Stack(children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              child: widget.icon == null
-                  ? SvgPicture.asset(
-                      widget.svgPath!,
-                      color: widget.unselectedForegroundColor,
-                      width: _iconSize,
-                      height: _iconSize * scaleAnimation.value,
-                      colorBlendMode: BlendMode.srcIn,
-                    )
-                  : Icon(
-                      widget.icon,
-                      color: widget.unselectedForegroundColor,
-                      size: _iconSize * scaleAnimation.value,
-                    ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: ClipRect(
-                clipper: _SvgPictureClipper(
-                    _activeColorClipAnimation.value * scaleAnimation.value),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
                 child: widget.icon == null
                     ? SvgPicture.asset(
                         widget.svgPath!,
-                        color: widget.selectedForegroundColor,
-                        width: _iconSize,
-                        height: _iconSize * scaleAnimation.value,
+                        color: widget.unselectedForegroundColor,
+                        width: (widget.size ?? _iconSize),
+                        height: (widget.size ?? _iconSize) * scaleAnimation.value,
                         colorBlendMode: BlendMode.srcIn,
                       )
                     : Icon(
                         widget.icon,
-                        color: widget.selectedForegroundColor,
-                        size: _iconSize * scaleAnimation.value,
+                        color: widget.unselectedForegroundColor,
+                        size: (widget.size ?? _iconSize) * scaleAnimation.value,
                       ),
               ),
-            ),
-          ]),
+              Container(
+                alignment: Alignment.center,
+                child: ClipRect(
+                  clipper: _SvgPictureClipper(_activeColorClipAnimation.value * scaleAnimation.value),
+                  child: widget.icon == null
+                      ? SvgPicture.asset(
+                          widget.svgPath!,
+                          color: widget.selectedForegroundColor,
+                          width: (widget.size ?? _iconSize),
+                          height: (widget.size ?? _iconSize) * scaleAnimation.value,
+                          colorBlendMode: BlendMode.srcIn,
+                        )
+                      : Icon(
+                          widget.icon,
+                          color: widget.selectedForegroundColor,
+                          size: (widget.size ?? _iconSize) * scaleAnimation.value,
+                        ),
+                ),
+              ),
+              if (widget.badge != null)
+                Container(
+                  padding: const EdgeInsets.all(3),
+                  width: 25,
+                  height: 25,
+                  alignment: Alignment.center,
+                  child: Text(
+                    widget.badge! >= 10 ? "+9" : widget.badge.toString(),
+                    style: TextStyle(
+                      color: widget.badgeTextColor ?? Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  transform: Matrix4.translationValues(
+                    (widget.size ?? _iconSize) + 5,
+                    -(((widget.size ?? _iconSize) - 12) * scaleAnimation.value),
+                    0,
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _activateBadgeColor.value,
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );
@@ -232,8 +272,7 @@ class _SvgPictureClipper extends CustomClipper<Rect> {
 
   @override
   Rect getClip(Size size) {
-    return Rect.fromPoints(size.topLeft(Offset.zero),
-        size.topRight(Offset.zero) + Offset(0, height));
+    return Rect.fromPoints(size.topLeft(Offset.zero), size.topRight(Offset.zero) + Offset(0, height));
   }
 
   @override

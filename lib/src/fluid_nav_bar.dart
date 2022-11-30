@@ -162,18 +162,19 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
           (entry) => widget.itemBuilder(
             entry.value,
             FluidNavBarItem(
-              entry.value.svgPath ?? entry.value.svgPath,
-              entry.value.icon,
-              _currentIndex == entry.key,
-              () => _handleTap(entry.key),
-              entry.value.selectedForegroundColor ?? widget.style?.iconSelectedForegroundColor ?? Colors.black,
-              entry.value.unselectedForegroundColor ?? widget.style?.iconUnselectedForegroundColor ?? Colors.grey,
-              entry.value.backgroundColor ??
-                  widget.style?.iconBackgroundColor ??
-                  widget.style?.barBackgroundColor ??
-                  Colors.white,
-              widget.scaleFactor,
-              widget.animationFactor,
+              badge: entry.value.badge,
+              badgeBackgroundColor: entry.value.badgeBackgroundColor,
+              badgeTextColor: entry.value.badgeTextColor,
+              size: entry.value.size,
+              svgPath: entry.value.svgPath,
+              icon: entry.value.icon,
+              selected: _currentIndex == entry.key,
+              onTap: () => _handleTap(entry.key),
+              selectedForegroundColor: entry.value.selectedForegroundColor ?? widget.style?.iconSelectedForegroundColor ?? Colors.black,
+              unselectedForegroundColor: entry.value.unselectedForegroundColor ?? widget.style?.iconUnselectedForegroundColor ?? Colors.grey,
+              backgroundColor: entry.value.backgroundColor ?? widget.style?.iconBackgroundColor ?? widget.style?.barBackgroundColor ?? Colors.white,
+              scaleFactor: widget.scaleFactor,
+              animationFactor: widget.animationFactor,
             ),
           ),
         )
@@ -253,15 +254,13 @@ class _BackgroundCurvePainter extends CustomPainter {
 
     final radius = Tween<double>(begin: _radiusTop, end: _radiusBottom).transform(norm);
     // Point colinear to the top edge of the background pane
-    final anchorControlOffset =
-        Tween<double>(begin: radius * _horizontalControlTop, end: radius * _horizontalControlBottom)
-            .transform(LinearPointCurve(0.5, 0.75).transform(norm));
+    final anchorControlOffset = Tween<double>(begin: radius * _horizontalControlTop, end: radius * _horizontalControlBottom)
+        .transform(LinearPointCurve(0.5, 0.75).transform(norm));
     // Point that slides up and down depending on distance for the target x position
-    final dipControlOffset = Tween<double>(begin: radius * _pointControlTop, end: radius * _pointControlBottom)
-        .transform(LinearPointCurve(0.5, 0.8).transform(norm));
+    final dipControlOffset =
+        Tween<double>(begin: radius * _pointControlTop, end: radius * _pointControlBottom).transform(LinearPointCurve(0.5, 0.8).transform(norm));
     final y = Tween<double>(begin: _topY, end: _bottomY).transform(LinearPointCurve(0.2, 0.7).transform(norm));
-    final dist =
-        Tween<double>(begin: _topDistance, end: _bottomDistance).transform(LinearPointCurve(0.5, 0.0).transform(norm));
+    final dist = Tween<double>(begin: _topDistance, end: _bottomDistance).transform(LinearPointCurve(0.5, 0.0).transform(norm));
     final x0 = _x - dist / 2;
     final x1 = _x + dist / 2;
 
