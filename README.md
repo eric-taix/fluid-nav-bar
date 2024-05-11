@@ -101,6 +101,24 @@ is displayed as:
 
 ![global style](./doc/global-style.png)
 
+
+### How to add Text with icon
+
+The easiest way is to define one or more properties in a `FluidNavBatStyle` and set this instance 
+in the `style` property of the `FluidNavBar`:
+
+```dart
+FluidNavBar(
+  icons: [
+    FluidNavBarIcon(svgPath: "assets/text_nevbar.svg", extras: {'label': 'Home'}),
+  ],
+)
+``` 
+
+is displayed as:
+
+![text with icon](./doc/global-style.png)
+
 Properties:  
 
 | Property | Description |  

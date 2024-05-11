@@ -30,6 +30,9 @@ class FluidNavBarItem extends StatefulWidget {
   /// Flag to know if this item is active or not
   final bool selected;
 
+  /// The label Text of the SVG asset
+  final extras;
+
   /// The color used to paint the SVG when the item is active
   final Color selectedForegroundColor;
 
@@ -51,6 +54,7 @@ class FluidNavBarItem extends StatefulWidget {
   FluidNavBarItem(
     this.svgPath,
     this.icon,
+    this.extras,
     this.selected,
     this.onTap,
     this.selectedForegroundColor,
@@ -74,7 +78,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
     with SingleTickerProviderStateMixin {
   static const double _activeOffset = 16;
   static const double _defaultOffset = 0;
-  static const double _iconSize = 25;
+  static const double _iconSize = 29;
 
   bool _selected;
 
@@ -170,44 +174,59 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
             shape: CircleBorder(),
           ),
           transform: Matrix4.translationValues(0, -_yOffsetAnimation.value, 0),
-          child: Stack(children: <Widget>[
-            Container(
+          child:Stack(
               alignment: Alignment.center,
-              child: widget.icon == null
-                  ? SvgPicture.asset(
-                      widget.svgPath!,
-                      color: widget.unselectedForegroundColor,
-                      width: _iconSize,
-                      height: _iconSize * scaleAnimation.value,
-                      colorBlendMode: BlendMode.srcIn,
-                    )
-                  : Icon(
-                      widget.icon,
-                      color: widget.unselectedForegroundColor,
-                      size: _iconSize * scaleAnimation.value,
-                    ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: ClipRect(
-                clipper: _SvgPictureClipper(
-                    _activeColorClipAnimation.value * scaleAnimation.value),
-                child: widget.icon == null
-                    ? SvgPicture.asset(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      child: widget.icon == null
+                          ? SvgPicture.asset(
                         widget.svgPath!,
-                        color: widget.selectedForegroundColor,
+                        color: widget.unselectedForegroundColor,
                         width: _iconSize,
                         height: _iconSize * scaleAnimation.value,
                         colorBlendMode: BlendMode.srcIn,
                       )
-                    : Icon(
+                          : Icon(
                         widget.icon,
-                        color: widget.selectedForegroundColor,
+                        color: widget.unselectedForegroundColor,
                         size: _iconSize * scaleAnimation.value,
                       ),
-              ),
-            ),
-          ]),
+                    ),
+                    widget.selected?Container():Container(
+                      child: Text(widget.extras!['label'],
+                        style: TextStyle(
+                            color: widget.extras!['labelColor'],
+                            fontWeight: FontWeight.w700,
+                            fontSize: 11
+                        ),),
+                    )
+                  ],
+                ),
+                // Container(
+                //   alignment: Alignment.center,
+                //   child: ClipRect(
+                //     clipper: _SvgPictureClipper(
+                //         _activeColorClipAnimation.value * scaleAnimation.value),
+                //     child: widget.icon == null
+                //         ? SvgPicture.asset(
+                //             widget.svgPath!,
+                //             color: widget.selectedForegroundColor,
+                //             width: _iconSize,
+                //             height: _iconSize * scaleAnimation.value,
+                //             colorBlendMode: BlendMode.srcIn,
+                //           )
+                //         : Icon(
+                //             widget.icon,
+                //             color: widget.selectedForegroundColor,
+                //             size: _iconSize * scaleAnimation.value,
+                //           ),
+                //   ),
+                // ),
+              ]),
         ),
       ),
     );

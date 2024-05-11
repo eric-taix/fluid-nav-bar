@@ -164,6 +164,7 @@ class _FluidNavBarState extends State<FluidNavBar> with TickerProviderStateMixin
             FluidNavBarItem(
               entry.value.svgPath ?? entry.value.svgPath,
               entry.value.icon,
+              entry.value.extras,
               _currentIndex == entry.key,
               () => _handleTap(entry.key),
               entry.value.selectedForegroundColor ?? widget.style?.iconSelectedForegroundColor ?? Colors.black,
