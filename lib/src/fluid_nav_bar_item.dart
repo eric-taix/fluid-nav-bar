@@ -1,6 +1,4 @@
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
-import 'package:fluid_bottom_nav_bar/src/fluid_nav_bar_icon.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -37,7 +35,10 @@ class FluidNavBarItem extends StatefulWidget {
   final Color unselectedForegroundColor;
 
   /// The background color of the item
-  final Color backgroundColor;
+  final Color selectedBackgroundColor;
+
+  /// The background color of the item
+  final Color unselectedBackgroundColor;
 
   /// The temporary SVG scale used when the item pop
   final double scaleFactor;
@@ -48,6 +49,9 @@ class FluidNavBarItem extends StatefulWidget {
   /// The delay factor of the animations ( < 1 is faster, > 1 is slower)
   final double animationFactor;
 
+  ///  The Name of the Package the asset to be used from.
+  final String? package;
+
   FluidNavBarItem(
     this.svgPath,
     this.icon,
@@ -55,9 +59,11 @@ class FluidNavBarItem extends StatefulWidget {
     this.onTap,
     this.selectedForegroundColor,
     this.unselectedForegroundColor,
-    this.backgroundColor,
+    this.selectedBackgroundColor,
+    this.unselectedBackgroundColor,
     this.scaleFactor,
     this.animationFactor,
+    this.package,
   )   : assert(scaleFactor >= 1.0),
         assert(svgPath == null || icon == null,
             'Cannot provide both an iconPath and an icon.'),
@@ -166,7 +172,9 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
           margin: EdgeInsets.all(ne.width / 2 - _iconSize),
           constraints: BoxConstraints.tight(Size.square(_iconSize * 2)),
           decoration: ShapeDecoration(
-            color: widget.backgroundColor,
+            color: _selected
+                ? widget.selectedBackgroundColor
+                : widget.unselectedBackgroundColor,
             shape: CircleBorder(),
           ),
           transform: Matrix4.translationValues(0, -_yOffsetAnimation.value, 0),
@@ -180,6 +188,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
                       width: _iconSize,
                       height: _iconSize * scaleAnimation.value,
                       colorBlendMode: BlendMode.srcIn,
+                      package: widget.package,
                     )
                   : Icon(
                       widget.icon,
@@ -199,6 +208,7 @@ class _FluidNavBarItemState extends State<FluidNavBarItem>
                         width: _iconSize,
                         height: _iconSize * scaleAnimation.value,
                         colorBlendMode: BlendMode.srcIn,
+                        package: widget.package,
                       )
                     : Icon(
                         widget.icon,

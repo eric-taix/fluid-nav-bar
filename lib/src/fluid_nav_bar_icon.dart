@@ -29,6 +29,9 @@ class FluidNavBarIcon {
   /// Extra information which can be used in [FluidNavBarItemBuilder]
   final Map<String, dynamic>? extras;
 
+  ///  The Name of the Package the asset to be used from.
+  final String? package;
+
   FluidNavBarIcon({
     this.iconPath,
     this.svgPath,
@@ -37,6 +40,9 @@ class FluidNavBarIcon {
     this.unselectedForegroundColor,
     this.backgroundColor,
     this.extras,
-  })  : assert(iconPath == null || svgPath == null || icon == null, 'Cannot provide both an svgPath and an icon.'),
-        assert(iconPath != null || svgPath != null || icon != null, 'An svgPath or an icon must be provided.');
+    this.package,
+  })  : assert(iconPath == null || svgPath == null || icon == null,
+            'Cannot provide both an svgPath and an icon.'),
+        assert(iconPath != null || svgPath != null || icon != null,
+            'An svgPath or an icon must be provided.');
 }

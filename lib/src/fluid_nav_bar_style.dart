@@ -24,7 +24,10 @@ class FluidNavBarStyle with Diagnosticable {
   final Color? barBackgroundColor;
 
   /// Icons background color
-  final Color? iconBackgroundColor;
+  final Color? iconSelectedBackgroundColor;
+
+  /// Icons background color
+  final Color? iconUnselectedBackgroundColor;
 
   /// Icons color when activated
   final Color? iconSelectedForegroundColor;
@@ -34,7 +37,8 @@ class FluidNavBarStyle with Diagnosticable {
 
   const FluidNavBarStyle({
     this.barBackgroundColor,
-    this.iconBackgroundColor,
+    this.iconSelectedBackgroundColor,
+    this.iconUnselectedBackgroundColor,
     this.iconSelectedForegroundColor,
     this.iconUnselectedForegroundColor,
   });
